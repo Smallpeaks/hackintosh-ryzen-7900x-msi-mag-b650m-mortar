@@ -1,10 +1,5 @@
-# hackintosh-ryzen-7900x-msi-mag-b650m-mortar
-### Ryzentosh with AMD Ryzen™ 9 7900X &amp; MSI MAG B650M MORTAR WIFI
-<img width="392" alt="Screenshot 2024-08-04 at 3 46 16 PM" src="https://github.com/user-attachments/assets/e7f47c27-3fce-449d-a37d-4f1c9d34602c"> 
-
-![alt text](<Screenshot 2024-08-04 at 4.47.37 PM.png>)
-
-All files will be found [here](EFI).
+# msi-mag-b650m-mortar
+### 微星 MAG B650M MORTAR WIFI
 
 ## Resources
 - [OpenCore guide](https://dortania.github.io/OpenCore-Install-Guide/)
@@ -16,7 +11,7 @@ All files will be found [here](EFI).
 ## What works and doesn't work?
 
 ### Working
-- Asrock Challenger Pro RX 6800 3x DisplayPort and 1x HDMI output
+- Asrock Challenger Pro RX 6650 3x DisplayPort and 1x HDMI output
 - GPU Acceleration and DRM
 - CPU Power Management
 - Sleep
@@ -39,9 +34,9 @@ All files will be found [here](EFI).
 
 ## The build 
 
-OpenCore Version: 1.0.0
+OpenCore Version: 1.0.5
 
-Operating Systems: Windows 11, macOS Sonoma 14.5
+Operating Systems: Windows 11, macOS15.4 Sequoia
 
 SMBIOS: MacPro7,1
 
@@ -52,9 +47,9 @@ SMBIOS: MacPro7,1
 | Motherboard | MSI MAG B650M MORTAR WIFI                                             |
 | BIOS        | 7D76vAH2(Beta version 2024-07-18)                                     |
 | CPU         | AMD Ryzen 9 7900X                                                     |
-| GPU         | AMD Radeon™ RX 6800 Challenger Pro 16G OC                             |
+| GPU         | AMD Radeon™ RX 6650                                                   |
 | RAM         | G.SKill Trident Z5 Neo RGB 32GB (2 x 16GB) DDR5 6000MHz CL30          |
-| NVMe 1      | SK Hynix BC511 256GB [macOS Drive]                                    |
+| NVMe 1      | SK Hynix BC511 1TB [macOS Drive]                                      |
 | NVMe 2      | Crucial P3 Plus 2TB [Windows Drive]                                   |
 | Wi-Fi/BT    | RZ616 [Disabled in BIOS]                                              |
 | Wi-Fi/BT    | PCIe to Qualcomm BCM943602CDP adaptor                                 |
@@ -66,10 +61,12 @@ SMBIOS: MacPro7,1
 
 ### ACPI
 
-| ACPIs                    |
-|--------------------------|
-| SSDT-CPUR.aml            |
-| SSDT-EC-USBX-DESKTOP.aml |
+| ACPIs                                    |
+|------------------------------------------|
+|  DSDT-MSI-MAG-B650M-BIOS-MORTAR          |
+|  SSDT-AMD-Radeon-RX6650XT                |
+|  SSDT-MSI-MAG-B650M-EC-MORTAR            |
+|  SSDT-MSI-MAG-B650M-MORTAR               |
 
 #### Delete
 
@@ -193,6 +190,8 @@ config.plist should look something like this
 | HfsPlus         |
 | OpenCanopy      |
 | OpenRuntime     |
+| ResetNvramEntry |
+| ToggleSipEntry  |
 
 ### Kernel Patches
 
@@ -203,16 +202,28 @@ config.plist should look something like this
 
 | Kext Name                             |
 |---------------------------------------|
-| AppleMCEReporterDisabler              |
-| Innie                                 |
-| Lilu                                  |
-| LucyRTL8125Ethernet                   |
-| NVMeFix                               |
-| RestrictEvents                        |
-| SMCProcessorAMD (note the order)      |
-| USBMap                                |
-| VirtualSMC                            |
-| WhateverGreen                         |
+| Lilu.kext                             |
+| VirtualSMC.kext                       |
+| AMDVoodooHDA.kext                     |
+| AppleMCEReporterDisabler.kext         |
+| RestrictEvents.kext                   |
+| AMDRyzenCPUPowerManagement.kext       |
+| SMCAMDProcessor.kext                  |
+| SMCRadeonGPU.kext                     |
+| NVMeFix.kext                          |
+| Innie.kext                            |
+| FeatureUnlock.kext                    |
+| HibernationFixup.kext                 | 
+| LucyRTL8125Ethernet.kext              | 
+| AMDUSBX.kext                          | 
+| USBToolBox.kext                       | 
+| UTBMap.kext                           | 
+| IOSkywalkFamily.kext                  | 
+| IO80211FamilyLegacy.kext              | 
+| AMFIPass.kext                         | 
+| RadeonBoost.kext                      | 
+| WhateverGreen.kext                    | 
+|                                       | 
 
 ### Booter
 #### MmioWhitelist
